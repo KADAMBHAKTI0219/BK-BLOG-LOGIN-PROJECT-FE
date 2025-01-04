@@ -1,9 +1,11 @@
 import axios from 'axios'
 import React, { useState } from 'react'
+import { useNavigate} from 'react-router-dom'
 
 const LogInPage = () => {
     const [email,setEmail] = useState('')
     const [password,setPassword] = useState('')
+    const navigate = useNavigate();
     const userData = {
         email,password
     }
@@ -12,7 +14,8 @@ const LogInPage = () => {
         axios.post('http://localhost:8080/api/blogUser/SignIn',userData)
         .then((response) => {
             const userId = response.data.userData._id
-            return localStorage.setItem('userId',userId)
+           localStorage.setItem('userId',userId)
+          navigate(`/blogList/${userId}`)
             })
             .catch((error) => {
                 console.error(error)
